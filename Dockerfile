@@ -1,12 +1,19 @@
-# syntax=docker/dockerfile:1
-
 FROM python:3.8-slim-buster
-LABEL org.containers.image.authors="spetersen555@gmail.com"
-RUN mkdir /python-docker
-WORKDIR /python-docker
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the requirements.txt file to the container
+COPY requirements.txt .
+
+# Install the required packages from the requirements.txt file
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the application code to the container
 COPY . .
-ENV FLASK_APP=app
-EXPOSE 5001
-CMD [ "python3", "app.py"]
+
+# Set environment variables
+ENV FLASK_APP=app.py
+
+# Specify the command to run the application
+CMD ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=5001"]
