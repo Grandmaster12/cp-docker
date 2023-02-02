@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    container_name: app
+    command: python3 app.py
+    ports:
+      - 5001:5001
+    volumes:
+      - .:/python-docker
